@@ -28,13 +28,15 @@
 				<span class="subject">{{ commit.subject|e }}</span> 
 				<span class="date">({{ commit.time|date(config.date) }})</span>
 				
-				{% if child %}
-					<span class="rev">Child: 
+				<span class="rev">Child: 
+					{% if child %}
 						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ child }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
 							{{ child }}
 						</a>
-					</span>
-				{% endif %}
+					{% else %}
+						<em>none</em>
+					{% endif %}
+				</span>
 				{% if parent %}
 					<span class="rev">Parent: 
 						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ parent.hash }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
