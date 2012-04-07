@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	<link rel="stylesheet" media="screen" href="style.css">
+</head>
+<body>
+	<h1 class="main">{{ title }}</h1>
+	
+	<div class="content">
+		<ul class="actions-bar">
+			{% if commit %}
+				<li class="rev">
+					<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ commit.hash }}&amp;commit">{{ commit.hash }}</a> 
+					{% if not diff %}
+						<a class="diff" href="?p={{ page|url_encode }}&amp;rev={{ commit.hash }}&amp;diff">(diff)</a> 
+					{% endif %}
+					<span class="date">({{ commit.time|date(config.date) }})</span>
+				</li>
+			{% endif %}
+			<li><a href="?p={{ page|url_encode }}">View</a></li>
+			<li><a href="?p={{ page|url_encode }}&amp;raw">Source</a></li>
+			<li><a href="?p={{ page|url_encode }}&amp;edit">Edit</a></li>
+			<li><a href="?p={{ page|url_encode }}&amp;history">History</a></li>
+		</ul>
+		{% if show_commit %}
+			<div class="commit">
+				<span class="subject">{{ commit.subject|e }}</span> 
+				<span class="date">({{ commit.time|date(config.date) }})</span>
+				
+				{% if child %}
+					<span class="rev">Child: 
+						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ child }}{% if diff %}&amp;diff{% endif %}">
+							{{ child }}
+						</a>
+					</span>
+				{% endif %}
+				{% if parent %}
+					<span class="rev">Parent: 
+						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ parent.hash }}{% if diff %}&amp;diff{% endif %}">
+							{{ parent.hash }}
+						</a>
+					</span>
+				{% endif %}
+				
+				<span class="rev">
+					Commit: 
+					<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ commit.hash }}">
+						{{ commit.hash }}
+					</a>
+				</span>
+			</div>
+		{% endif %}
+		
+		{% if edit %}
+			<h2>Editing {{ title|e }}</h2>
+			<form action="?p={{ page|url_encode }}&edit&amp;base={{ commit.hash }}" method="post">
+				<textarea name="content">{{ content|e }}</textarea>
+				<div class="commit-info">
+					<input type="text" name="message">
+					<input type="submit" value="Save page">
+				</div>
+			</form>
+		{% elseif history %}
+			<h2>History</h2>
+			<ul class="history">
+				{% for rev in history %}
+					<li>
+						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}">{{ rev.hash }}</a> 
+						<small>
+							(<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;diff">diff</a>, 
+							<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;raw">raw</a>)
+						</small> 
+						&ndash; <span class="date">{{ rev.time|date(config.date) }} by </span>
+						<span class="author">{{ rev.author }}</span> 
+						&mdash; 
+						
+						<span class="subject">{{ rev.subject|e }}</span>
+					</li>
+				{% endfor %}
+			</ul>
+		{% elseif diff %}
+			<div class="diff">
+				{{ diff }}
+			</div>
+		{% else %}
+			{{ content }}
+		{% endif %}
+	</div>
+	
+	<footer>
+		<small>&copy; 2012 gwiki</small>
+	</footer>
+</body>
+</html>

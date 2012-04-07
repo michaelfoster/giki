@@ -1,0 +1,221 @@
+body {
+	font-family: sans-serif;
+	font-size: 9pt;
+	color: #222;
+	background: #eee;
+}
+h1.main {
+	text-align: center;
+	font-family: serif;
+	font-size: 26pt;
+}
+div.content {
+	background: white;
+	
+	width: 80%;
+	min-width: 520px;
+	max-width: 1200px;
+	padding: 15px 35px;
+	margin: 10px auto;
+	border: 2px solid #aaa;
+	border-radius: 10px;
+	
+	word-wrap: break-word;
+	font-family: Helvetica, arial, freesans, clean, sans-serif;
+	color: #333;
+	
+	font-size: 14px;
+	line-height: 22px;
+}
+div.content strong {
+	color: #111;
+}
+div.content h1, div.content h2, div.content h3, div.content h4, div.content h5 {
+	color: black;
+	display: block;
+	padding: 10px 0;
+	margin: 15px 0;
+	
+	line-height: 30px;
+	
+	font-weight: bold;
+}
+div.content h1 {
+	font-size: 24pt;
+}
+div.content h2 {
+	font-size: 22pt;
+	border-bottom: 1px solid #CCC;
+}
+div.content ul, div.content ol {
+	padding-left: 30px;
+	margin: 15px 0;
+}
+div.content li {
+	margin: 15px 0;
+	line-height: 1.6;
+}
+div.content pre {
+	background-color: #F8F8F8;
+	border: 1px solid #CCC;
+	font-size: 13px;
+	line-height: 19px;
+	overflow: auto;
+	padding: 8px 12px;
+	border-radius: 3px;
+}
+
+div.content ul.actions-bar {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0;
+	text-align: right;
+}
+div.content ul.actions-bar li {
+	list-style: none;
+	margin: 0 10px;
+	line-height: auto;
+	display: inline;
+}
+
+div.content ul.actions-bar li.rev {
+	font-size: 11pt;
+	float: left;
+	color: #555;
+}
+div.content ul.actions-bar li.rev a.rev {
+	color: #d44;
+}
+div.content ul.actions-bar li.rev a.diff {
+	font-size: 10pt;
+}
+div.content ul.actions-bar li.rev span.date {
+	margin: 0 3px;
+	font-size: 8pt;
+	color: #222;
+}
+
+div.content form textarea {
+	width: 100%;
+	height: 500px;
+}
+div.content form div.commit-info {
+	text-align: right;
+	padding: 5px 0;
+	margin-right: 5px;
+}
+div.content form div.commit-info input {
+	margin: 5px;
+}
+div.content form div.commit-info input[type="text"] {
+	width: 100%;
+	max-width: 700px;
+	border: 1px solid #ccc;
+	padding: 4px 5px;
+}
+div.content form div.commit-info input[type="submit"] {
+	width: 100px;
+	padding: 3px 5px;
+}
+
+div.commit {
+	padding: 5px 15px;
+	margin: 10px 5px;
+	
+	color: #333;
+	border: 1px solid #777;
+	border-radius: 5px;
+	
+	overflow: auto;
+}
+div.commit span.subject {
+	font-weight: bold;
+}
+div.commit span.date {
+	font-size: 9pt;
+}
+div.commit span.rev {
+	float: right;
+	margin: 0 5px;
+	font-size: 9pt;
+	display: block;
+}
+
+a {
+	color: #4183C4;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+div.diff {
+	font-family: monospace;
+}
+div.diff div.line.head {
+	color: #555;
+}
+div.diff div.line {
+	line-height: 24px;
+	font-size: 12px;
+	padding: 0 8px;
+}
+div.diff div.line.add {
+	background: #dfd;
+	color: #080;
+}
+div.diff div.line.del {
+	background: #fdd;
+	color: #d00;
+}
+div.diff div.line.gc, div.diff div.line.eof {
+	color: #999;
+	background: #f9f9f9;
+}
+div.diff div.line.unchanged {
+	color: #555;
+	background: #faffff;
+}
+
+ul.history small, ul.history small a {
+	color: #d44;
+}
+ul.history span.date {
+	font-size: smaller;
+	color: #666;
+}
+ul.history span.author {
+	font-size: smaller;
+	color: #666;
+	color: #d44;
+}
+ul.history span.subject {
+	color: #333;
+}
+
+
+pre.error {
+	font-size: 10pt;
+	width: 450px;
+	margin: 0 auto;
+	padding: 15px 20px;
+	
+	border: 3px solid #333;
+	
+	background: #444;
+	color: #eee;
+	
+	white-space: pre-wrap;
+	
+	border-radius: 10px;
+	box-shadow: 1px 1px 3px #777;
+}
+footer {	
+	width: 90%;
+	max-width: 1200px;
+	border-top: 1px solid #ddd;
+	margin: 30px auto 5px auto;
+	padding: 5px 0;
+	text-align: center;
+}
+
