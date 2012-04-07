@@ -5,7 +5,7 @@ require 'inc/lib/SmartyPants/smartypants.php';
 
 class Markup {
 	public static function parse($text) {
-		return SmartyPants(Markdown($text));
+		return SmartyPants(Markdown(htmlspecialchars($text)));
 	}
 	public static function diff($text) {
 		$text = str_replace("\r", '', $text);
