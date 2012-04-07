@@ -37,7 +37,7 @@ class Git {
 		file_put_contents(Git::path($page, true, true), $body);
 		Git::exec('add ' . escapeshellarg(Git::path($page, false)));
 		Git::exec('commit --allow-empty --no-verify --message=' . escapeshellarg($commit_message) . ' --author=' . escapeshellarg($config['author']));
-		Git::exec('gc');
+		Git::exec('gc', false);
 	}
 	
 	public static function exists($page) {
