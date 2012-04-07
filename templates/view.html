@@ -30,14 +30,14 @@
 				
 				{% if child %}
 					<span class="rev">Child: 
-						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ child }}{% if diff %}&amp;diff{% endif %}">
+						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ child }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
 							{{ child }}
 						</a>
 					</span>
 				{% endif %}
 				{% if parent %}
 					<span class="rev">Parent: 
-						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ parent.hash }}{% if diff %}&amp;diff{% endif %}">
+						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ parent.hash }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
 							{{ parent.hash }}
 						</a>
 					</span>
@@ -66,7 +66,7 @@
 			<ul class="history">
 				{% for rev in history %}
 					<li>
-						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}">{{ rev.hash }}</a> 
+						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;commit">{{ rev.hash }}</a> 
 						<small>
 							(<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;diff">diff</a>, 
 							<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;raw">raw</a>)

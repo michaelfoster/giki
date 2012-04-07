@@ -91,12 +91,16 @@ class Git {
 	}
 	
 	public static function child($page, $revision) {
-		$child = Git::exec('log --format="%h" --children -n1 ' . escapeshellarg($revision) . '..HEAD -- ' . escapeshellarg(Git::path($page, false)));
+		// TODO:
+		// there's probably a much easier way of doing this...
 		
-		if(!$child)
+		$children = Git::exec('log --format="%h" --children --reverse ' . escapeshellarg('HEAD...' . $revision) . ' -- ' . escapeshellarg(Git::path($page, false)));
+		$children = explode("\n", trim($children));
+		
+		if(!isset($children[0]) || empty($children[0]))
 			return false;
 		
-		return trim($child);
+		return $children[0];
 	}
 	
 	public static function exec($args, $die_on_error = true) {
