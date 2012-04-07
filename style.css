@@ -67,7 +67,7 @@ div.content pre {
 	overflow: auto;
 	padding: 8px 12px;
 }
-div.content code, div.content tt {\
+div.content code, div.content tt {
 	margin: 0 2px;
 	padding: 0 5px;
 	white-space: nowrap;
