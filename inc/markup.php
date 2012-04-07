@@ -16,6 +16,9 @@ class Markup {
 		foreach($lines as $line) {
 			$class = array('line');
 			
+			if($line == '')
+				continue;
+			
 			if(preg_match('/^\+/', $line))
 				$class[] = 'add';
 			elseif(preg_match('/^-/', $line))

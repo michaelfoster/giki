@@ -55,7 +55,7 @@ class Git {
 	}
 	
 	public static function diff($page, $revision = 'HEAD') {
-		return Git::exec('diff ' . escapeshellarg($revision) . '^ -- ' . escapeshellarg(Git::path($page, false)));
+		return Git::exec('show --format="%b" ' . escapeshellarg($revision) . ' -- ' . escapeshellarg(Git::path($page, false)));
 	}
 	
 	public static function commit($page, $revision = 'HEAD', $n = 1, $die_on_error = true) {
