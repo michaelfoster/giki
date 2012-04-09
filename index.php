@@ -31,7 +31,6 @@ if($page_uri != $page) {
 if(!preg_match('/^[' . $config['allowed_page_characters'] . ']*$/', $page))
 	error('Invalid page: ' . $page);
 
-
 $commit = false;
 $content = false;
 $parent = false;
@@ -68,9 +67,10 @@ if(preg_match('/^Special:(.*)$/', $page, $m)) {
 	unset($_GET['diff']);
 } else {
 	$commit = Git::commit($page, $rev);
-	$content = Git::show($page, $rev);
+	$content = Git::show($page, $commit['hash']);
 	$parent = Git::parent($page, $commit['hash']);
-	$child = Git::child($page, $commit['hash']);
+	if($rev != 'HEAD')
+		$child = Git::child($page, $commit['hash']);
 }
 
 $title = Git::title($page);

@@ -35,3 +35,6 @@ $config['allowed_page_characters'] = 'a-zA-Z0-9_\\-.\/():';
 // page encoding
 $config['encoding'] = 'utf-8';
 
+// increase page speed with APC
+$config['apc'] = extension_loaded('apc');
+

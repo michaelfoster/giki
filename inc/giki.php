@@ -107,6 +107,9 @@ class Git {
 	public static function exec($args, $die_on_error = true) {
 		global $config;
 		
+		if($config['apc'] && $output = apc_fetch('git_' . md5($args)))
+			return $output;
+		
 		$command = "{$config['git']} --git-dir={$config['git_dir']} --work-tree={$config['data_dir']} $args 2> " . escapeshellarg($config['git_error']);
 		$output = shell_exec($command);
 		if(is_null($output) && $error = file_get_contents($config['git_error'])) {
@@ -117,6 +120,9 @@ class Git {
 		}
 		
 		@unlink($config['git_error']);
+		
+		if($config['apc'] && !preg_match('/^(gc|push|commit|add|ls-files) /', $args) && !preg_match('/HEAD/', $args))
+			apc_store('git_' . md5($args), $output);
 		
 		return $output;
 	}
