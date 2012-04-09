@@ -2,6 +2,9 @@
 #
 # Markdown Extra  -  A text-to-HTML conversion tool for web writers
 #
+# Modified for Giki
+# Copyright (c) 2012 Michael Foster
+
 # PHP Markdown & Extra
 # Copyright (c) 2004-2012 Michel Fortin  
 # <http://michelf.com/projects/php-markdown/>
@@ -779,9 +782,13 @@ class Markdown_Parser {
 		$url			=  $matches[3] == '' ? $matches[4] : $matches[3];
 		$title			=& $matches[7];
 
-		$url = $this->encodeAttribute($url);
-
-		$result = "<a href=\"$url\"";
+		$url = Markup::URL($url);
+		if($url === false)
+			return $whole_match;
+		
+		$url[0] = $this->encodeAttribute($url[0]);
+		
+		$result = "<a class=\"{$url[1]}\" href=\"{$url[0]}\"";
 		if (isset($title)) {
 			$title = $this->encodeAttribute($title);
 			$result .=  " title=\"$title\"";
