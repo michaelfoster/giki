@@ -41,7 +41,7 @@ class Markup {
 	}
 	public static function diff($text) {
 		$text = str_replace("\r", '', $text);
-		$diff_lines = explode("\n", $text);
+		$diff_lines = explode("\n", $text . "\n");
 		
 		$lines = array();
 		$classes = array();
@@ -53,9 +53,6 @@ class Markup {
 		foreach($diff_lines as &$line) {
 			$class = array('line');
 			
-			if($line == '')
-				continue;
-			
 			if(preg_match('/^\+/', $line)) {
 				$class[] = 'add';
 				
@@ -65,6 +62,8 @@ class Markup {
 				$class[] = 'del';
 				
 				$minus[] = &$line;
+			} elseif(preg_match('/^\\\ /', $line)) {
+				$class[] = 'eof';
 			} else {
 				if(!empty($minus)) {
 					$sections[] = array($minus, $plus);
@@ -72,10 +71,10 @@ class Markup {
 					$plus = array();
 				}
 				
-				if(preg_match('/^@@ /', $line))
+				if($line == '')
+					continue;
+				elseif(preg_match('/^@@ /', $line))
 					$class[] = 'gc';
-				elseif(preg_match('/^\\\ /', $line))
-					$class[] = 'eof';
 				elseif(preg_match('/^ /', $line))
 					$class[] = 'unchanged';
 				elseif(preg_match('/^(diff \-\-git|index )/', $line))
@@ -85,6 +84,8 @@ class Markup {
 			$lines[] = &$line;
 			$classes[] = $class;
 		}
+		
+		unset($sections[0]);
 		
 		foreach($sections as &$section) {
 			for($i = 0; $i < count($section[1]); $i++) {

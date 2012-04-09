@@ -92,7 +92,7 @@ div.content pre code, div.content pre tt {
 }
 
 div.content table {
-	width: 100%;
+	/*width: 100%;*/
 }
 div.content table tr th {
 	text-align: left;
