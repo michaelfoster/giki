@@ -10,24 +10,19 @@ $twig = new Twig_Environment($loader, array(
         // 'cache' => 'templates/cache',
 ));
 
-function render($template, $arg, $strip_whitespace = true) {
+function render($template, $arg) {
 	global $twig, $config;
 	
 	$arg['config'] = $config;
 	
 	$html = $twig->render($template, $arg);
 	
-	if($strip_whitespace) {
-		$html = str_replace("\t", '', $html);
-		$html = str_replace("\n", '', $html);
-	}
-		
 	return $html;
 }
 
 function error($message) {
 	global $config;
 	
-	die(render('error.html', array('error' => $message), false));
+	die(render('error.html', array('error' => $message)));
 }
 

@@ -2,6 +2,8 @@
 
 require 'inc/giki.php';
 
+header('Content-Type: text/html; charset=' . $config['encoding']);
+
 if(!is_dir($config['git_dir'])) {
 	Git::initialize();
 }
@@ -18,8 +20,7 @@ if(!isset($_GET['rev']))
 else
 	$rev = $_GET['rev'];
 
-$title = Git::title($page);
-if(!Git::exists($page)) {	
+if(!Git::exists($page)) {
 	$commit = false;
 	$content = false;
 	$parent = false;
@@ -37,7 +38,10 @@ if(!Git::exists($page)) {
 	$child = Git::child($page, $commit['hash']);
 }
 
-$args = array('page' => $page, 'title' => $title, 'commit' => $commit, 'parent' => $parent, 'child' => $child, 'content' => &$content);
+$page_uri = Markup::URI($page);
+$title = Git::title($page);
+
+$args = array('page' => $page, 'page_uri' => $page_uri, 'title' => &$title, 'commit' => $commit, 'parent' => $parent, 'child' => $child, 'content' => &$content);
 
 if(isset($_GET['commit']))
 	$args['show_commit'] = true;
@@ -61,13 +65,15 @@ if(isset($_GET['raw'])) {
 			error('updated before submit');
 		} else {
 			Git::write($page, $_POST['content'], $_POST['message']);
-			header('Location: ?p=' . urlencode($page), 302); 
+			header('Location: ?p=' . $page_uri, 302); 
 			exit;
 		}
 	} else {
 		$args['edit'] = true;
 	}
 } else {
+	if(!$title = Markup::title($content))
+		$title = Git::title($page);
 	$content = Markup::parse($content);
 }
 

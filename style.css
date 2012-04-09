@@ -45,8 +45,16 @@ div.content h1 {
 }
 div.content h2 {
 	font-size: 22pt;
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px solid #ccc;
 }
+div.content h3 {
+	font-size: 16pt;
+}
+div.content h3, div.content h4, div.content h5 {
+	padding: 0;
+	
+}
+
 div.content ul, div.content ol {
 	padding-left: 30px;
 	margin: 15px 0;
@@ -57,21 +65,46 @@ div.content li {
 }
 
 div.content pre, div.content code, div.content tt {
-	background: #F8F8F8;
+	background: #f8f8f8;
 	border-radius: 3px;
 }
 
 div.content pre {
-	border: 1px solid #CCC;
+	border: 1px solid #ccc;
 	line-height: 19px;
 	overflow: auto;
 	padding: 8px 12px;
+	font-size: 10pt;
 }
 div.content code, div.content tt {
 	margin: 0 2px;
 	padding: 0 5px;
 	white-space: nowrap;
-	border: 1px solid #EAEAEA;
+	border: 1px solid #eaeaea;
+}
+
+div.content pre code, div.content pre tt {
+	background-color: transparent;
+	border: none;
+	white-space: pre;
+	padding: 0;
+	margin: 0;
+}
+
+div.content table {
+	width: 100%;
+}
+div.content table tr th {
+	text-align: left;
+	font-weight: strong;
+	border-bottom: 2px solid #ddd;
+}
+div.content table tr td {
+	border-bottom: 1px solid #eaeaea;
+}
+div.content table tr td, div.content table tr th {
+	padding: 1px 5px;
+	margin: 0 10px;
 }
 
 div.content ul.actions-bar {
@@ -151,7 +184,7 @@ div.commit span.rev {
 }
 
 a {
-	color: #4183C4;
+	color: #4183c4;
 	text-decoration: none;
 }
 a.notfound {
@@ -168,6 +201,7 @@ a:hover {
 
 div.diff {
 	font-family: monospace;
+	white-space: pre;
 }
 div.diff div.line.head {
 	color: #555;
@@ -181,9 +215,18 @@ div.diff div.line.add {
 	background: #dfd;
 	color: #080;
 }
+div.diff div.line.add span {
+	background: #afa;
+}
 div.diff div.line.del {
 	background: #fdd;
 	color: #d00;
+}
+div.diff div.line.del span {
+	background: #faa;
+}
+div.diff div.line span {
+	padding: 2px 1px;
 }
 div.diff div.line.gc, div.diff div.line.eof {
 	color: #999;

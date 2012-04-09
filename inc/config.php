@@ -19,3 +19,5 @@ $config['date'] = 'H:i, j F Y';
 
 $config['allowed_page_characters'] = 'a-fA-F0-9_\\-.\/';
 
+$config['encoding'] = 'utf-8';
+

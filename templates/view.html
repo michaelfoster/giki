@@ -11,17 +11,17 @@
 		<ul class="actions-bar">
 			{% if commit %}
 				<li class="rev">
-					<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ commit.hash }}&amp;commit">{{ commit.hash }}</a> 
+					<a class="rev" href="?p={{ page }}&amp;rev={{ commit.hash }}&amp;commit">{{ commit.hash }}</a> 
 					{% if not diff %}
-						<a class="diff" href="?p={{ page|url_encode }}&amp;rev={{ commit.hash }}&amp;diff">(diff)</a> 
+						<a class="diff" href="?p={{ page_uri }}&amp;rev={{ commit.hash }}&amp;diff">(diff)</a> 
 					{% endif %}
 					<span class="date">({{ commit.time|date(config.date) }})</span>
 				</li>
 			{% endif %}
-			<li><a href="?p={{ page|url_encode }}">View</a></li>
-			<li><a href="?p={{ page|url_encode }}&amp;raw">Source</a></li>
-			<li><a href="?p={{ page|url_encode }}&amp;edit">Edit</a></li>
-			<li><a href="?p={{ page|url_encode }}&amp;history">History</a></li>
+			<li><a href="?p={{ page_uri }}">View</a></li>
+			<li><a href="?p={{ page_uri }}&amp;raw">Source</a></li>
+			<li><a href="?p={{ page_uri }}&amp;edit">Edit</a></li>
+			<li><a href="?p={{ page_uri }}&amp;history">History</a></li>
 		</ul>
 		{% if show_commit %}
 			<div class="commit">
@@ -30,7 +30,7 @@
 				
 				<span class="rev">Child: 
 					{% if child %}
-						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ child }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
+						<a class="rev" href="?p={{ page_uri }}&amp;rev={{ child }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
 							{{ child }}
 						</a>
 					{% else %}
@@ -39,7 +39,7 @@
 				</span>
 				{% if parent %}
 					<span class="rev">Parent: 
-						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ parent.hash }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
+						<a class="rev" href="?p={{ page_uri }}&amp;rev={{ parent.hash }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
 							{{ parent.hash }}
 						</a>
 					</span>
@@ -47,7 +47,7 @@
 				
 				<span class="rev">
 					Commit: 
-					<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ commit.hash }}">
+					<a class="rev" href="?p={{ page_uri }}&amp;rev={{ commit.hash }}">
 						{{ commit.hash }}
 					</a>
 				</span>
@@ -56,7 +56,7 @@
 		
 		{% if edit %}
 			<h2>Editing {{ title|e }}</h2>
-			<form action="?p={{ page|url_encode }}&edit&amp;base={{ commit.hash }}" method="post">
+			<form action="?p={{ page_uri }}&edit&amp;base={{ commit.hash }}" method="post">
 				<textarea name="content">{{ content|e }}</textarea>
 				<div class="commit-info">
 					<input type="text" name="message">
@@ -68,10 +68,10 @@
 			<ul class="history">
 				{% for rev in history %}
 					<li>
-						<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;commit">{{ rev.hash }}</a> 
+						<a class="rev" href="?p={{ page_uri }}&amp;rev={{ rev.hash }}&amp;commit">{{ rev.hash }}</a> 
 						<small>
-							(<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;diff">diff</a>, 
-							<a class="rev" href="?p={{ page|url_encode }}&amp;rev={{ rev.hash }}&amp;raw">raw</a>)
+							(<a class="rev" href="?p={{ page_uri }}&amp;rev={{ rev.hash }}&amp;diff">diff</a>, 
+							<a class="rev" href="?p={{ page_uri }}&amp;rev={{ rev.hash }}&amp;raw">raw</a>)
 						</small> 
 						&ndash; <span class="date">{{ rev.time|date(config.date) }} by </span>
 						<span class="author">{{ rev.author }}</span> 
