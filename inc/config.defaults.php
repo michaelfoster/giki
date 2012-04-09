@@ -30,7 +30,7 @@ $config['title'] = 'Giki Example';
 $config['main_page'] = 'Main_Page';
 
 // allowed characters in article/page names
-$config['allowed_page_characters'] = 'a-zA-Z0-9_\\-.\/()';
+$config['allowed_page_characters'] = 'a-zA-Z0-9_\\-.\/():';
 
 // page encoding
 $config['encoding'] = 'utf-8';
