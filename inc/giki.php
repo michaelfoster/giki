@@ -1,5 +1,6 @@
 <?php
 
+require 'inc/config.defaults.php';
 require 'inc/config.php';
 require 'inc/display.php';
 require 'inc/markup.php';
@@ -41,7 +42,7 @@ class Git {
 	}
 	
 	public static function exists($page) {
-		return file_exists(Git::path($page));
+		return Git::exec('ls-files ' . escapeshellarg(Git::path($page, false)));
 	}
 	
 	public static function title($page) {
@@ -59,12 +60,12 @@ class Git {
 	}
 	
 	public static function commit($page, $revision = 'HEAD', $n = 1, $die_on_error = true) {
-		$log = trim(Git::exec('log -' . (int)$n . ' --pretty="%h %at %aN %s" ' . escapeshellarg($revision) . ' -- ' . escapeshellarg(Git::path($page, false)), $die_on_error));
+		$log = trim(Git::exec('log -' . (int)$n . ' --pretty="%h %at {%aN} %s" ' . escapeshellarg($revision) . ' -- ' . escapeshellarg(Git::path($page, false)), $die_on_error));
 		$commits = array();
 		
 		$lines = explode("\n", $log);
 		
-		if(!preg_match_all('/^([a-f0-9]{7}) (\d+) (\S+) (.*)$/m', $log, $c)) {
+		if(!preg_match_all('/^([a-f0-9]{7}) (\d+) \{(.+?)\} (.*)$/m', $log, $c)) {
 			if(!$die_on_error)
 				return false;
 			
@@ -127,7 +128,7 @@ class Git {
 			@mkdir($config['data_dir']);
 		
 		Git::exec('init');
-		Git::write($config['default_page'], '## Hello, world!', 'init');
+		// Git::write($config['main_page'], '## Hello, world!', 'init');
 	}
 }
 

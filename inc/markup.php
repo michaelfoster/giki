@@ -157,7 +157,7 @@ class Markup {
 			
 			$page = preg_replace('/#.*$/', '', $page);
 			
-			if(Git::exists($page))
+			if(preg_match('/^Special:/', $page) || Git::exists($page))
 				return array($url, 'internal');
 			else
 				return array($url, 'internal notfound');

@@ -5,7 +5,13 @@
 	<link rel="stylesheet" media="screen" href="style.css">
 </head>
 <body>
-	<h1 class="main">{{ title }}</h1>
+	<h1 class="main">
+		{% if page == config.main_page %}
+			{{ config.title }}
+		{% else %}
+			{{ title }} &mdash; {{ config.title }}
+		{% endif %}
+	</h1>
 	
 	<div class="content">
 		<ul class="actions-bar">
@@ -18,11 +24,17 @@
 					<span class="date">({{ commit.time|date(config.date) }})</span>
 				</li>
 			{% endif %}
-			<li><a href="?p={{ page_uri }}">View</a></li>
-			<li><a href="?p={{ page_uri }}&amp;raw">Source</a></li>
-			<li><a href="?p={{ page_uri }}&amp;edit">Edit</a></li>
-			<li><a href="?p={{ page_uri }}&amp;history">History</a></li>
+			<li><a href="?p={{ config.main_page }}">{{ config.title }}</a></li>
+			{% if menu %}
+				{% if page != config.main_page %}
+					<li><a href="?p={{ page_uri }}">View</a></li>
+				{% endif %}
+				<li><a href="?p={{ page_uri }}&amp;raw">Source</a></li>
+				<li><a href="?p={{ page_uri }}&amp;edit">Edit</a></li>
+				<li><a href="?p={{ page_uri }}&amp;history">History</a></li>
+			{% endif %}
 		</ul>
+		
 		{% if show_commit %}
 			<div class="commit">
 				<span class="subject">{{ commit.subject|e }}</span> 
@@ -37,6 +49,7 @@
 						<em>none</em>
 					{% endif %}
 				</span>
+				
 				{% if parent %}
 					<span class="rev">Parent: 
 						<a class="rev" href="?p={{ page_uri }}&amp;rev={{ parent.hash }}{% if diff %}&amp;diff{% else %}&amp;commit{% endif %}">
@@ -51,11 +64,22 @@
 						{{ commit.hash }}
 					</a>
 				</span>
+				
+				<span class="rev">Author: 
+					{{ commit.author }}
+				</span>
 			</div>
 		{% endif %}
 		
-		{% if edit %}
-			<h2>Editing {{ title|e }}</h2>
+		{% if allpages %}
+			<h1>All Pages</h1>
+			<ul>
+				{% for page in allpages %}
+					<li><a class="internal" href="?p={{ page.0 }}">{{ page.1 }}</a></li>
+				{% endfor %}
+			</ul>
+		{% elseif edit %}
+			<h2>{{ title|e }}</h2>
 			<form action="?p={{ page_uri }}&edit&amp;base={{ commit.hash }}" method="post">
 				<textarea name="content">{{ content|e }}</textarea>
 				<div class="commit-info">

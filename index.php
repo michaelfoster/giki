@@ -9,11 +9,12 @@ if(!is_dir($config['git_dir'])) {
 }
 
 if(!isset($_GET['p']) || $_GET['p'] == '') {
-	header('Location: ?p=' . urlencode($config['default_page']), 302); 
+	header('Location: ?p=' . urlencode($config['main_page']), 302); 
 	exit;
 }
 
 $page = $_GET['p'];
+
 
 if(!isset($_GET['rev']))
 	$rev = 'HEAD';
@@ -27,12 +28,39 @@ if($page_uri != $page) {
 	exit;
 }
 
-if(!Git::exists($page)) {
-	$commit = false;
-	$content = false;
-	$parent = false;
-	$child = false;
+if(!preg_match('/^[' . $config['allowed_page_characters'] . ']*$/', $page))
+	error('Invalid page: ' . $page);
+
+
+$commit = false;
+$content = false;
+$parent = false;
+$child = false;
+$title = false;
+
+$args = array('page' => &$page, 'page_uri' => &$page_uri, 'title' => &$title, 'commit' => &$commit, 'parent' => &$parent, 'child' => &$child, 'content' => &$content, 'menu' => true);
+
+if(preg_match('/^Special:(.*)$/', $page, $m)) {
+	$args['menu'] = false;
 	
+	$special = $m[1];
+	
+	switch($special) {
+		case 'AllPages':
+			$pages = explode("\n", trim(Git::exec('ls-files')));
+			foreach($pages as &$file) {
+				$file = preg_replace('/\.md$/', '', $file);
+				$file = array($file, Git::title($file));
+			}
+			
+			$args['allpages'] = $pages;
+			
+			break;
+		default:
+			$content = 'Invalid special page.';
+	}
+	
+} elseif(!Git::exists($page)) {
 	// force edit
 	$_GET['edit'] = true;
 	unset($_GET['raw']);
@@ -46,8 +74,6 @@ if(!Git::exists($page)) {
 }
 
 $title = Git::title($page);
-
-$args = array('page' => $page, 'page_uri' => $page_uri, 'title' => &$title, 'commit' => $commit, 'parent' => $parent, 'child' => $child, 'content' => &$content);
 
 if(isset($_GET['commit']))
 	$args['show_commit'] = true;
@@ -75,6 +101,7 @@ if(isset($_GET['raw'])) {
 			exit;
 		}
 	} else {
+		$title = 'Editing “' . $title . '”';
 		$args['edit'] = true;
 	}
 } else {
