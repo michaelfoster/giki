@@ -20,6 +20,13 @@ if(!isset($_GET['rev']))
 else
 	$rev = $_GET['rev'];
 
+$page_uri = Markup::URI($page);
+
+if($page_uri != $page) {
+	header('Location: ?p=' . $page_uri, 302); 
+	exit;
+}
+
 if(!Git::exists($page)) {
 	$commit = false;
 	$content = false;
@@ -38,7 +45,6 @@ if(!Git::exists($page)) {
 	$child = Git::child($page, $commit['hash']);
 }
 
-$page_uri = Markup::URI($page);
 $title = Git::title($page);
 
 $args = array('page' => $page, 'page_uri' => $page_uri, 'title' => &$title, 'commit' => $commit, 'parent' => $parent, 'child' => $child, 'content' => &$content);

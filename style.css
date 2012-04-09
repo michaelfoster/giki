@@ -14,7 +14,7 @@ div.content {
 	
 	width: 80%;
 	min-width: 520px;
-	max-width: 1200px;
+	max-width: 1400px;
 	padding: 15px 35px;
 	margin: 10px auto;
 	border: 2px solid #aaa;
@@ -101,10 +101,11 @@ div.content table tr th {
 }
 div.content table tr td {
 	border-bottom: 1px solid #eaeaea;
+	vertical-align: top;
 }
 div.content table tr td, div.content table tr th {
-	padding: 1px 5px;
-	margin: 0 10px;
+	padding: 2px 5px;
+	margin: 0;
 }
 
 div.content ul.actions-bar {

@@ -5,6 +5,8 @@ require 'inc/lib/SmartyPants/smartypants.php';
 require 'inc/lib/HTMLPurifier/HTMLPurifier.includes.php';
 require 'inc/lib/FineDiff/finediff.php';
 
+HTMLPurifier_Bootstrap::autoload('HTMLPurifier_URIScheme_irc');
+
 class Markup {
 	public static function parse($text) {
 		global $config;		
@@ -23,6 +25,7 @@ class Markup {
 		$purifierConfig->set('Attr.EnableID', true);
 		$purifierConfig->set('Attr.AllowedRel', array('nofollow'));
 		$purifierConfig->set('AutoFormat.Linkify', true);
+		$purifierConfig->set('URI.AllowedSchemes', array('http' => true, 'https' => true, 'mailto' => true, 'ftp' => true, 'irc' => true));
 		
 		$purifier = new HTMLPurifier($purifierConfig);
 		
@@ -88,7 +91,7 @@ class Markup {
 		unset($sections[0]);
 		
 		foreach($sections as &$section) {
-			for($i = 0; $i < count($section[1]); $i++) {
+			for($i = 0; $i < count($section[0]) && $i < count($section[1]); $i++) {
 				$input = substr($section[0][$i], 1);
 				$output = substr($section[1][$i], 1);
 				
@@ -140,6 +143,8 @@ class Markup {
 		return $html;
 	}
 	public static function URI($page) {
+		$page = str_replace(' ', '_', $page);
+		
 		return $page;
 	}
 	public static function URL($url) {
