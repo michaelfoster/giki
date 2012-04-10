@@ -59,9 +59,15 @@ if(preg_match('/^Special:(.*)$/', $page, $m)) {
 			$content = 'Invalid special page.';
 	}
 	
+	unset($_GET['edit']);
+	unset($_GET['commit']);
+	unset($_GET['raw']);
+	unset($_GET['history']);
+	unset($_GET['diff']);
 } elseif(!Git::exists($page)) {
 	// force edit
 	$_GET['edit'] = true;
+	unset($_GET['commit']);
 	unset($_GET['raw']);
 	unset($_GET['history']);
 	unset($_GET['diff']);
