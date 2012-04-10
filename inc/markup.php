@@ -67,6 +67,7 @@ class Markup {
 				$minus[] = &$line;
 			} elseif(preg_match('/^\\\ /', $line)) {
 				$class[] = 'eof';
+				$line = htmlspecialchars($line);
 			} else {
 				if(!empty($minus)) {
 					$sections[] = array($minus, $plus);
@@ -82,6 +83,8 @@ class Markup {
 					$class[] = 'unchanged';
 				elseif(preg_match('/^(diff \-\-git|index )/', $line))
 					continue;
+				
+				$line = htmlspecialchars($line);
 			}
 			
 			$lines[] = &$line;
