@@ -164,7 +164,7 @@ class Markup {
 		}
 			
 		
-		return array($url, 'external');
+		return array($url, '');
 	}
 }
 
