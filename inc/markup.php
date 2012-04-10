@@ -94,7 +94,14 @@ class Markup {
 		unset($sections[0]);
 		
 		foreach($sections as &$section) {
-			for($i = 0; $i < count($section[0]) && $i < count($section[1]); $i++) {
+			for($i = 0; $i < count($section[0]) || $i < count($section[1]); $i++) {
+				if(!isset($section[0][$i]) || !isset($section[1][$i])) {
+					if(isset($section[0][$i]))
+						$section[0][$i] = htmlspecialchars($section[0][$i]);
+					elseif(isset($section[1][$i]))
+						$section[1][$i] = htmlspecialchars($section[1][$i]);
+					continue;
+				}
 				$input = substr($section[0][$i], 1);
 				$output = substr($section[1][$i], 1);
 				
