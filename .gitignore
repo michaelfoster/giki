@@ -1,1 +1,4 @@
-/data/*
+/data
+/img
+
+/inc/lib/HTMLPurifier/HTMLPurifier/DefinitionCache

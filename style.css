@@ -107,7 +107,9 @@ div.content table tr td, div.content table tr th {
 	padding: 2px 5px;
 	margin: 0;
 }
-
+div.content img {
+	margin: 5px 10px;
+}
 div.markup a.notfound {
 	color: #D44;
 }
